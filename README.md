@@ -162,7 +162,6 @@ WRITE_LEGACY_SAMPLE=1 ./run_all.sh
 ```
 
 ## 9) References
-- Technical report (human-readable): `macro_engine_plain_report_v4.pdf`
-- Report source: `macro_engine_plain_report_v4.tex`
+- Technical report: `macro_engine_plain_report_v4.pdf`
 - Schema and field definitions: `macro_engine_schema.md`
 - Validation evolution record: `VALIDATION_ENGINE_FROM_V1.md`
