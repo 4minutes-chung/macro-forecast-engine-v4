@@ -1,0 +1,211 @@
+{
+  "contract_version": "v4.1",
+  "incumbent_regime": "champion_a",
+  "challenger_regime": "champion_b",
+  "incumbent_map_output": "outputs/macro_engine/champion_map.json",
+  "challenger_map_output": "outputs/macro_engine/champion_map_champion_b.json",
+  "incumbent_factors": {
+    "hpi_growth_yoy": {
+      "bucket_5_12": {
+        "calibration_scale": 0.97,
+        "coverage90_before": 0.8210227272727273,
+        "coverage90_after_est": 0.8210227272727273,
+        "calibration_samples": 352,
+        "target_coverage90": 0.9,
+        "base_width_ratio": 1.6221411339509304,
+        "projected_width_ratio_after": 1.5734768999324025,
+        "width_cap": 1.55,
+        "calibration_method": "bucket_objective",
+        "calibration_context": "incumbent",
+        "coverage_monotonicity_pass": true,
+        "challenger_override_applied": false,
+        "bucket_override_applied": true
+      }
+    },
+    "unemployment_rate": {
+      "bucket_5_12": {
+        "calibration_scale": 1.205,
+        "coverage90_before": 0.8721590909090909,
+        "coverage90_after_est": 0.8863636363636364,
+        "calibration_samples": 352,
+        "target_coverage90": 0.9,
+        "base_width_ratio": 1.3441203400680086,
+        "projected_width_ratio_after": 1.6196650097819505,
+        "width_cap": 1.6,
+        "calibration_method": "bucket_objective",
+        "calibration_context": "incumbent",
+        "coverage_monotonicity_pass": true,
+        "challenger_override_applied": false,
+        "bucket_override_applied": false
+      }
+    },
+    "ust10_rate": {
+      "bucket_1_4": {
+        "calibration_scale": 1.106,
+        "coverage90_before": 0.8465909090909091,
+        "coverage90_after_est": 0.875,
+        "calibration_samples": 176,
+        "target_coverage90": 0.9,
+        "base_width_ratio": 0.9703552217229653,
+        "projected_width_ratio_after": 1.0732128752255996,
+        "width_cap": 1.1,
+        "calibration_method": "bucket_objective",
+        "calibration_context": "incumbent",
+        "coverage_monotonicity_pass": true,
+        "challenger_override_applied": false,
+        "bucket_override_applied": true
+      },
+      "bucket_5_12": {
+        "calibration_scale": 1.55,
+        "coverage90_before": 0.7215909090909091,
+        "coverage90_after_est": 0.9005681818181818,
+        "calibration_samples": 352,
+        "target_coverage90": 0.9,
+        "base_width_ratio": 0.8797485676237732,
+        "projected_width_ratio_after": 1.3636102798168486,
+        "width_cap": 1.7,
+        "calibration_method": "bucket_objective",
+        "calibration_context": "incumbent",
+        "coverage_monotonicity_pass": true,
+        "challenger_override_applied": false,
+        "bucket_override_applied": false
+      }
+    }
+  },
+  "challenger_factors": {
+    "hpi_growth_yoy": {
+      "bucket_5_12": {
+        "calibration_scale": 1.54,
+        "coverage90_before": 0.73125,
+        "coverage90_after_est": 0.8375,
+        "calibration_samples": 320,
+        "target_coverage90": 0.9,
+        "base_width_ratio": 1.0,
+        "projected_width_ratio_after": 1.54,
+        "width_cap": 1.55,
+        "calibration_method": "bucket_objective",
+        "calibration_context": "challenger",
+        "coverage_monotonicity_pass": true,
+        "challenger_override_applied": false,
+        "bucket_override_applied": true
+      }
+    },
+    "unemployment_rate": {
+      "bucket_5_12": {
+        "calibration_scale": 1.07,
+        "coverage90_before": 0.884375,
+        "coverage90_after_est": 0.890625,
+        "calibration_samples": 320,
+        "target_coverage90": 0.9,
+        "base_width_ratio": 1.4235775293816288,
+        "projected_width_ratio_after": 1.5232279564383429,
+        "width_cap": 1.6,
+        "calibration_method": "bucket_objective",
+        "calibration_context": "challenger",
+        "coverage_monotonicity_pass": true,
+        "challenger_override_applied": false,
+        "bucket_override_applied": false
+      }
+    },
+    "ust10_rate": {
+      "bucket_1_4": {
+        "calibration_scale": 1.0,
+        "coverage90_before": 0.90625,
+        "coverage90_after_est": 0.90625,
+        "calibration_samples": 160,
+        "target_coverage90": 0.9,
+        "base_width_ratio": 1.0,
+        "projected_width_ratio_after": 1.0,
+        "width_cap": 1.1,
+        "calibration_method": "bucket_objective",
+        "calibration_context": "challenger",
+        "coverage_monotonicity_pass": true,
+        "challenger_override_applied": false,
+        "bucket_override_applied": true
+      },
+      "bucket_5_12": {
+        "calibration_scale": 1.4175,
+        "coverage90_before": 0.778125,
+        "coverage90_after_est": 0.9,
+        "calibration_samples": 320,
+        "target_coverage90": 0.9,
+        "base_width_ratio": 0.8856553154929097,
+        "projected_width_ratio_after": 1.2554164097111995,
+        "width_cap": 1.35,
+        "calibration_method": "bucket_objective",
+        "calibration_context": "challenger",
+        "coverage_monotonicity_pass": true,
+        "challenger_override_applied": true,
+        "bucket_override_applied": false
+      }
+    }
+  },
+  "challenger_proxy_factors": {
+    "hpi_growth_yoy": {
+      "bucket_5_12": {
+        "calibration_scale": 1.54,
+        "coverage90_before": 0.73125,
+        "coverage90_after_est": 0.8375,
+        "calibration_samples": 320,
+        "target_coverage90": 0.9,
+        "base_width_ratio": 1.0,
+        "projected_width_ratio_after": 1.54,
+        "width_cap": 1.55,
+        "calibration_method": "bucket_objective",
+        "calibration_context": "challenger",
+        "coverage_monotonicity_pass": true,
+        "challenger_override_applied": false,
+        "bucket_override_applied": true
+      }
+    },
+    "unemployment_rate": {
+      "bucket_5_12": {
+        "calibration_scale": 1.07,
+        "coverage90_before": 0.884375,
+        "coverage90_after_est": 0.890625,
+        "calibration_samples": 320,
+        "target_coverage90": 0.9,
+        "base_width_ratio": 1.4235775293816288,
+        "projected_width_ratio_after": 1.5232279564383429,
+        "width_cap": 1.6,
+        "calibration_method": "bucket_objective",
+        "calibration_context": "challenger",
+        "coverage_monotonicity_pass": true,
+        "challenger_override_applied": false,
+        "bucket_override_applied": false
+      }
+    },
+    "ust10_rate": {
+      "bucket_1_4": {
+        "calibration_scale": 1.0,
+        "coverage90_before": 0.90625,
+        "coverage90_after_est": 0.90625,
+        "calibration_samples": 160,
+        "target_coverage90": 0.9,
+        "base_width_ratio": 1.0,
+        "projected_width_ratio_after": 1.0,
+        "width_cap": 1.1,
+        "calibration_method": "bucket_objective",
+        "calibration_context": "challenger",
+        "coverage_monotonicity_pass": true,
+        "challenger_override_applied": false,
+        "bucket_override_applied": true
+      },
+      "bucket_5_12": {
+        "calibration_scale": 1.4175,
+        "coverage90_before": 0.778125,
+        "coverage90_after_est": 0.9,
+        "calibration_samples": 320,
+        "target_coverage90": 0.9,
+        "base_width_ratio": 0.8856553154929097,
+        "projected_width_ratio_after": 1.2554164097111995,
+        "width_cap": 1.35,
+        "calibration_method": "bucket_objective",
+        "calibration_context": "challenger",
+        "coverage_monotonicity_pass": true,
+        "challenger_override_applied": true,
+        "bucket_override_applied": false
+      }
+    }
+  }
+}

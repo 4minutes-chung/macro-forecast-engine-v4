@@ -1,0 +1,16 @@
+{
+  "snapshot": "day1_baseline_pre_retune",
+  "timestamp_utc": "2026-02-19T03:13:46.403881Z",
+  "metrics": {
+    "inc_release_pass": true,
+    "chal_release_pass": true,
+    "promotion_pass": true,
+    "promotion_gain_h9_h12": 14.139942946292015,
+    "short_horizon_worsen_h1_h4": -8.635145177509983,
+    "inc_boundary_consistency_pass": true,
+    "chal_boundary_consistency_pass": true,
+    "inc_scenario_pass": true,
+    "chal_scenario_pass": true,
+    "coverage_fail_cells_count": 5
+  }
+}

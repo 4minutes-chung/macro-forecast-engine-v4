@@ -1,0 +1,205 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+
+\title{Macro Risk V4 Release Review and Technical Record}
+\author{}
+\date{2026-02-20}
+
+\begin{document}
+\maketitle
+
+\section{Outline and purpose of this report}
+This report is structured to answer six practical questions:
+\begin{enumerate}[leftmargin=1.4em]
+  \item What is this macro engine as a complete system: assumptions, methodology, and design.
+  \item What are the V4 validation results, and what do they imply for release and promotion.
+  \item What changed in V4, and why those changes matter.
+  \item Is V4 materially better than V3 on governance outcomes.
+  \item What risks remain, and how serious they are.
+  \item What operating discipline is required after release.
+\end{enumerate}
+
+All metrics in this report are sourced from package artifacts under
+\texttt{outputs/macro\_engine/validation/}.
+
+\section{What this macro engine does as a whole}
+\subsection{System objective}
+The engine produces quarterly macro paths, interval forecasts, and governance outputs
+used by downstream risk processes.
+
+\subsection{Data and assumption framework}
+Core data artifacts:
+\begin{itemize}[leftmargin=1.2em]
+  \item \texttt{data/macro\_panel\_quarterly\_raw.csv}
+  \item \texttt{data/macro\_panel\_quarterly\_model.csv}
+  \item \texttt{data/macro\_panel\_metadata.json}
+\end{itemize}
+
+Assumption design combines:
+\begin{itemize}[leftmargin=1.2em]
+  \item short-horizon empirical forecasting,
+  \item bridge dynamics,
+  \item long-horizon scenario overlays.
+\end{itemize}
+
+\subsection{Methodology and architecture summary}
+\begin{itemize}[leftmargin=1.2em]
+  \item Forecast horizon: 80 quarters.
+  \item Incumbent regime (\texttt{champion\_a}): short Q1--Q12, bridge Q13--Q24, long Q25--Q80.
+  \item Challenger regime (\texttt{champion\_b}): short Q1--Q16, bridge Q17--Q28, long Q29--Q80.
+  \item Candidate short-horizon models: BVAR, AR, RW.
+  \item Champion selection buckets: Q1..Q4 and Q5..Q12.
+\end{itemize}
+
+\subsection{Release handoff outputs}
+Handoff set:
+\begin{itemize}[leftmargin=1.2em]
+  \item \texttt{outputs/macro\_engine/pd\_regressors\_forecast\_levels.csv}
+  \item \texttt{outputs/macro\_engine/pd\_regressors\_forecast\_derived.csv}
+  \item \texttt{outputs/macro\_engine/pd\_regressors\_metadata.json}
+\end{itemize}
+
+Primary targets:
+\texttt{unemployment\_rate}, \texttt{ust10\_rate}, \texttt{hpi\_yoy}
+(mapped from \texttt{hpi\_growth\_yoy}).
+
+\section{V4 validation results and release implications}
+Source:
+\texttt{outputs/macro\_engine/validation/validation\_summary.json}
+
+\subsection{Release profile results}
+\begin{longtable}{@{}p{0.36\textwidth}p{0.14\textwidth}p{0.14\textwidth}p{0.14\textwidth}p{0.12\textwidth}@{}}
+\toprule
+Metric & Threshold & Incumbent & Challenger & Result \\
+\midrule
+Release pass & required & True & True & PASS \\
+Minimum required-cell \(n\_{oos}\) & \(\ge 40\) & 44 & 40 & PASS \\
+Median rRMSE h1..h2 & \(\le 1.00\) & 0.9744 & 1.0000 & PASS \\
+Median rRMSE h3..h4 & \(< 0.98\) & 0.9208 & 0.9333 & PASS \\
+Mean CRPS gain h5..h12 vs RW & \(\ge 3.0\%\) & 15.1304\% & 12.7381\% & PASS \\
+Coverage90 pass-rate & \(\ge 0.75\) & 0.9444 & 1.0000 & PASS \\
+Width ratio mean & \(\le 1.35\) & 1.3438 & 1.2748 & PASS \\
+Width ratio per-variable max & \(\le 1.60\) & 1.4779 & 1.3767 & PASS \\
+Boundary consistency & pass & True & True & PASS \\
+Scenario checks & pass & True & True & PASS \\
+\bottomrule
+\end{longtable}
+
+\subsection{Promotion results}
+\begin{longtable}{@{}p{0.52\textwidth}p{0.22\textwidth}p{0.16\textwidth}@{}}
+\toprule
+Metric & Threshold & Actual \\
+\midrule
+Promotion pass & pass & True \\
+CRPS gain h9..h12 (challenger vs incumbent) & \(\ge 5.0\%\) & 14.1399\% \\
+Short-horizon CRPS worsen h1..h4 & \(\le 1.0\%\) & -8.6351\% \\
+Boundary comparator pass & required & True \\
+\bottomrule
+\end{longtable}
+
+\subsection{Implication for release and promotion}
+The result is not borderline.
+Release and promotion both pass with meaningful margin on medium-horizon gain,
+while short-horizon behavior improves rather than worsens.
+
+\section{What changed in V4 and why it mattered}
+The following changes were material to governance outcomes:
+\begin{enumerate}[leftmargin=1.4em]
+  \item Challenger evaluation path was corrected to use challenger champion artifacts end-to-end.
+  \item Scenario timing checks were aligned with regime start logic.
+  \item Small-gap tie-break logic was upgraded to use coverage-width balance.
+  \item Challenger ust10 long-bucket calibration constraints were tightened.
+  \item Calibration monotonicity checks were added.
+  \item Boundary consistency checks were added to gate evaluation.
+\end{enumerate}
+
+Why this mattered:
+these changes improved challenger quality and interval discipline,
+which directly addressed the conditions that previously blocked promotion.
+
+\section{Is V4 materially better than V3 on governance}
+\subsection{Direct comparison (V3 vs V4)}
+\begin{longtable}{@{}p{0.42\textwidth}p{0.18\textwidth}p{0.18\textwidth}p{0.12\textwidth}@{}}
+\toprule
+Metric & V3 & V4 & Direction \\
+\midrule
+Challenger release pass & False & True & Improved \\
+Promotion pass & False & True & Improved \\
+CRPS gain h9..h12 (challenger vs incumbent) & 1.6426\% & 14.1399\% & Improved \\
+Short-horizon CRPS worsen h1..h4 & 0.4207\% & -8.6351\% & Improved \\
+Challenger width ratio mean & 1.5285 & 1.2748 & Improved \\
+Coverage-fail count & 5 & 2 & Improved \\
+\bottomrule
+\end{longtable}
+
+\subsection{Conclusion from comparison}
+On governance metrics that drive release and promotion decisions,
+V4 is materially stronger than V3.
+
+\section{Remaining risks and severity}
+\subsection{Known residual issue}
+Current coverage-fail cells:
+\begin{itemize}[leftmargin=1.2em]
+  \item \texttt{hpi\_growth\_yoy}, h=6, coverage90=0.7727, width-ratio=1.4147
+  \item \texttt{hpi\_growth\_yoy}, h=11, coverage90=0.7955, width-ratio=1.7148
+\end{itemize}
+
+\subsection{Severity assessment}
+\begin{itemize}[leftmargin=1.2em]
+  \item Scope: localized to one variable family and medium bucket.
+  \item Gate impact: no release or promotion failure in current state.
+  \item Severity classification: \textbf{medium, controlled}.
+\end{itemize}
+
+\section{Next steps}
+\begin{enumerate}[leftmargin=1.4em]
+  \item Keep V3 available as rollback benchmark.
+  \item Move long-run structural redesign work to V5 scope.
+\end{enumerate}
+
+\section{Conclusion and decision}
+\textbf{V4 for controlled release.}
+
+Reasons:
+\begin{itemize}[leftmargin=1.2em]
+  \item release gates pass for incumbent and challenger,
+  \item promotion gate passes,
+  \item no-regression checks pass,
+  \item residual risk is narrow, explicit, and monitorable.
+\end{itemize}
+
+\section{Reproducibility commands}
+\begin{verbatim}
+python3 scripts/fetch_macro_panel_fred.py \
+  --raw-output data/macro_panel_quarterly_raw.csv \
+  --model-output data/macro_panel_quarterly_model.csv \
+  --metadata-output data/macro_panel_metadata.json
+
+python3 scripts/run_macro_forecast_engine.py \
+  --config macro_engine_config.json \
+  --output-dir outputs/macro_engine
+
+python3 scripts/run_macro_validation.py \
+  --config macro_engine_config.json \
+  --input data/macro_panel_quarterly_model.csv \
+  --output-dir outputs/macro_engine/validation \
+  --champion-map-output outputs/macro_engine/champion_map.json \
+  --verbose-validation
+
+python3 scripts/export_pd_macro_subset.py \
+  --config macro_engine_config.json \
+  --input outputs/macro_engine/macro_forecast_paths.csv \
+  --model-panel data/macro_panel_quarterly_model.csv \
+  --levels-output outputs/macro_engine/pd_regressors_forecast_levels.csv \
+  --derived-output outputs/macro_engine/pd_regressors_forecast_derived.csv \
+  --metadata-output outputs/macro_engine/pd_regressors_metadata.json
+\end{verbatim}
+
+\end{document}

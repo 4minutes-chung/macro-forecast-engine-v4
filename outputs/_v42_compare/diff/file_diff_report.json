@@ -1,0 +1,20 @@
+{
+  "base_dir": "outputs/_v42_compare/no_legacy",
+  "new_dir": "outputs/_v42_compare/with_legacy",
+  "added_files": [],
+  "removed_files": [],
+  "changed_files": [
+    "pd_macro_subset_sample.csv",
+    "pd_regressors_metadata.json",
+    "validation/regime_challenger/pd_regressors_metadata.json",
+    "validation/regime_incumbent/pd_regressors_metadata.json"
+  ],
+  "counts": {
+    "added": 0,
+    "removed": 0,
+    "changed": 4,
+    "unchanged": 61,
+    "total_base": 65,
+    "total_new": 65
+  }
+}

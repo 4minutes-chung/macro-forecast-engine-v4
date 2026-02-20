@@ -1,0 +1,58 @@
+{
+  "contract_version": "v4.1",
+  "regime_id": "champion_b",
+  "assumption_set": "base",
+  "data_rows_used": 116,
+  "var_benchmark": {
+    "lag_order": 2,
+    "bic": -4.938291445552785,
+    "stable": true,
+    "n_variables": 12,
+    "variables": [
+      "unemployment_rate",
+      "headline_cpi_yoy",
+      "core_cpi_yoy",
+      "real_gdp_growth_yoy",
+      "hpi_growth_yoy",
+      "housing_starts_yoy",
+      "mortgage30_rate",
+      "ust10_rate",
+      "high_yield_spread",
+      "fed_funds_rate",
+      "consumer_delinquency_rate",
+      "working_age_pop_growth_yoy"
+    ]
+  },
+  "bvar": {
+    "lag_order": 2,
+    "bic_like": 55.909914686682384,
+    "stable": true,
+    "hyperparams": {
+      "lambda1": 0.2,
+      "lambda2": 0.5,
+      "lambda3": 1.0,
+      "lambda4": 5.0
+    }
+  },
+  "regime": {
+    "short_quarters": 16,
+    "medium_quarters": 28,
+    "long_start_quarter": 29,
+    "total_quarters": 80
+  },
+  "validation": {
+    "scoring_draws": 200,
+    "ensemble_temperature": 0.2,
+    "ensemble_gap_pct": 1.5
+  },
+  "champion_map": {
+    "path": "outputs/macro_engine/champion_map_champion_b.json",
+    "hash": "80e12008f51ab86e"
+  },
+  "generated_scenarios": [
+    "Baseline",
+    "Mild_Adverse",
+    "Severe_Adverse",
+    "Demographic_LowGrowth"
+  ]
+}
