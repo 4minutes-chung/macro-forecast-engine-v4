@@ -19,10 +19,6 @@ python3 scripts/fetch_macro_panel_fred.py \
   --model-output data/macro_panel_quarterly_model.csv \
   --metadata-output data/macro_panel_metadata.json
 
-python3 scripts/run_macro_forecast_engine.py \
-  --config macro_engine_config.json \
-  --output-dir outputs/macro_engine
-
 python3 scripts/run_macro_validation.py \
   --config macro_engine_config.json \
   --input data/macro_panel_quarterly_model.csv \
@@ -30,6 +26,11 @@ python3 scripts/run_macro_validation.py \
   --champion-map-output outputs/macro_engine/champion_map.json \
   ${STRICT_FLAG} \
   ${VERBOSE_FLAG}
+
+python3 scripts/run_macro_forecast_engine.py \
+  --config macro_engine_config.json \
+  --output-dir outputs/macro_engine \
+  --champion-map outputs/macro_engine/champion_map.json
 
 EXPORT_CMD=(
   python3 scripts/export_pd_macro_subset.py

@@ -30,6 +30,11 @@ Interpretation:
 - V4 is publishable as the current governed package.
 - V3 remains available as rollback/fallback baseline.
 
+Reproducibility/provenance note:
+- Prior run-order risk (forecast before validation) could leave top-level outputs one step stale if champion maps changed.
+- Current `run_all.sh` flow fixes this: validation writes champion maps first, then forecast runs with explicit `--champion-map`.
+- This removes the known mismatch risk where `macro_model_diagnostics.json` hash could differ from the current `champion_map.json`.
+
 ## 3) Canonical handoff files
 Use these three files for PD ingestion:
 - `outputs/macro_engine/pd_regressors_forecast_levels.csv` (canonical)
@@ -131,16 +136,17 @@ python3 scripts/fetch_macro_panel_fred.py \
   --model-output data/macro_panel_quarterly_model.csv \
   --metadata-output data/macro_panel_metadata.json
 
-python3 scripts/run_macro_forecast_engine.py \
-  --config macro_engine_config.json \
-  --output-dir outputs/macro_engine
-
 python3 scripts/run_macro_validation.py \
   --config macro_engine_config.json \
   --input data/macro_panel_quarterly_model.csv \
   --output-dir outputs/macro_engine/validation \
   --champion-map-output outputs/macro_engine/champion_map.json \
   --verbose-validation
+
+python3 scripts/run_macro_forecast_engine.py \
+  --config macro_engine_config.json \
+  --output-dir outputs/macro_engine \
+  --champion-map outputs/macro_engine/champion_map.json
 
 python3 scripts/export_pd_macro_subset.py \
   --config macro_engine_config.json \
