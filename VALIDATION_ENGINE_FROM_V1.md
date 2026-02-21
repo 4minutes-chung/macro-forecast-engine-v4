@@ -5,7 +5,6 @@ Package focus: `/Users/stevenchung/Desktop/P12B_File/Macro risk v4`
 
 ## 1) Purpose
 This file is the validation history and current gate dashboard from V1 to V4.2.
-It replaces older scorecard + bootstrap validation notes.
 
 ## 2) Evolution by version
 | Version | Validation maturity | Gate snapshot | Key advancement |
